@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Use free Minecraft calculators for stacks, Nether travel, and project planning.">
+    <link rel="stylesheet" href="../assets/css/Kulay.css">
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+    <title>Minecraft Tools - CraftHub</title>
+</head>
+<body>
+    <header>
+        <h1>Minecraft Tools</h1>
+        <p>Quick calculators for survival, travel, and building projects.</p>
+    </header>
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.html#Articles">Articles</a></li>
+            <li><a href="categories.html">Categories</a></li>
+            <li><a href="tools.html" aria-current="page">Tools</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    <main id="main-content">
+        <section class="tool-grid">
+            <article class="tool-card">
+                <h2>Stack calculator</h2>
+                <label for="item-count">Number of items</label>
+                <input id="item-count" type="number" min="0" value="64">
+                <label for="stack-size">Items per stack</label>
+                <select id="stack-size"><option value="64">64</option><option value="16">16</option><option value="1">1</option></select>
+                <output id="stack-result">1 stack</output>
+            </article>
+            <article class="tool-card">
+                <h2>Nether portal converter</h2>
+                <label for="overworld-x">Overworld X</label>
+                <input id="overworld-x" type="number" value="800">
+                <label for="overworld-z">Overworld Z</label>
+                <input id="overworld-z" type="number" value="400">
+                <button id="convert-nether" type="button">Convert to Nether</button>
+                <output id="nether-result">Nether: X 100, Z 50</output>
+            </article>
+            <article class="tool-card">
+                <h2>Travel time estimate</h2>
+                <label for="travel-distance">Distance in blocks</label>
+                <input id="travel-distance" type="number" min="0" value="1000">
+                <label for="travel-speed">Estimated speed</label>
+                <select id="travel-speed"><option value="5">Walking - 5 blocks/sec</option><option value="12">Sprinting - 12 blocks/sec</option><option value="20">Ice boat - 20 blocks/sec</option></select>
+                <output id="travel-result">3 minutes 20 seconds</output>
+            </article>
+        </section>
+    </main>
+    <footer><p>2026 The CraftHub Blog. All rights reserved.</p></footer>
+    <script src="../assets/js/site.js" defer></script>
+    <script>
+        const itemCount = document.getElementById('item-count');
+        const stackSize = document.getElementById('stack-size');
+        const stackResult = document.getElementById('stack-result');
+        function updateStacks() {
+            const count = Math.max(0, Number(itemCount.value) || 0);
+            const size = Number(stackSize.value);
+            const full = Math.floor(count / size);
+            const remainder = count % size;
+            stackResult.textContent = `${full} ${full === 1 ? 'stack' : 'stacks'}${remainder ? ` + ${remainder}` : ''}`;
+        }
+        itemCount.addEventListener('input', updateStacks);
+        stackSize.addEventListener('change', updateStacks);
+
+        document.getElementById('convert-nether').addEventListener('click', () => {
+            const x = Math.round((Number(document.getElementById('overworld-x').value) || 0) / 8);
+            const z = Math.round((Number(document.getElementById('overworld-z').value) || 0) / 8);
+            document.getElementById('nether-result').textContent = `Nether: X ${x}, Z ${z}`;
+        });
+
+        const distance = document.getElementById('travel-distance');
+        const speed = document.getElementById('travel-speed');
+        const travelResult = document.getElementById('travel-result');
+        function updateTravel() {
+            const seconds = Math.ceil((Number(distance.value) || 0) / Number(speed.value));
+            const minutes = Math.floor(seconds / 60);
+            const remainder = seconds % 60;
+            travelResult.textContent = `${minutes ? `${minutes} minute${minutes === 1 ? '' : 's'} ` : ''}${remainder} seconds`.trim();
+        }
+        distance.addEventListener('input', updateTravel);
+        speed.addEventListener('change', updateTravel);
+        updateStacks();
+        updateTravel();
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>CraftHub Minecraft Guides</title>
+    <link>https://example.com/</link>
+    <description>Practical Minecraft survival, building, farming, and crafting guides.</description>
+    <language>en-us</language>
+    <item>
+      <title>5 Essential Tips to Survive Your First Night in Minecraft</title>
+      <link>https://example.com/articles/article-first-night.html</link>
+      <guid>https://example.com/articles/article-first-night.html</guid>
+      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Beginner survival tips for your first night in Minecraft.</description>
+    </item>
+  </channel>
+</rss>

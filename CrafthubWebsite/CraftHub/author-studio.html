@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your CraftHub article content from the author studio.">
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/Kulay.css">
+    <title>CraftHub Author Studio</title>
+</head>
+<body>
+    <nav aria-label="Main navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#Articles">Articles</a></li>
+            <li><a href="pages/categories.html">Categories</a></li>
+            <li><a href="pages/ytVids.html">Building Tutorials</a></li>
+            <li><a href="pages/about.html">About</a></li>
+            <li><a href="author-studio.html" aria-current="page">Author Studio</a></li>
+        </ul>
+    </nav>
+
+    <main class="admin-page">
+        <aside class="admin-intro" aria-label="Author dashboard overview">
+            <div class="status-badge">AUTHOR</div>
+            <div class="admin-intro-copy">
+                <h1>Author Studio</h1>
+                <p>Create and update your Minecraft articles.</p>
+            </div>
+            <div class="admin-toolbar" aria-label="Author quick actions">
+                <button id="new-article-btn" type="button">New article</button>
+                <button id="preview-site-btn" class="secondary" type="button">View site</button>
+            </div>
+        </aside>
+
+        <div class="admin-content">
+            <section class="admin-metrics" aria-label="Your article statistics">
+                <div class="metric-card">
+                    <span class="metric-label">Your articles</span>
+                    <strong id="metric-total">0</strong>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Your posts</span>
+                    <strong id="metric-custom">0</strong>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Featured</span>
+                    <strong id="metric-featured">0</strong>
+                </div>
+            </section>
+
+            <div class="dashboard-main">
+                <section class="admin-panel" id="editor-panel" aria-labelledby="article-form-heading">
+                    <h2 id="article-form-heading">Create or edit your article</h2>
+                    <form id="article-form">
+                        <input id="article-id" type="hidden" value="">
+
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input id="title" name="title" type="text" placeholder="Example: Build a Better Farm" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select id="category" name="category">
+                                    <option value="Survival">Survival</option>
+                                    <option value="Building">Building</option>
+                                    <option value="Farming">Farming</option>
+                                    <option value="Mining">Mining</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="difficulty">Difficulty</label>
+                                <select id="difficulty" name="difficulty">
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="author">Author</label>
+                                <input id="author" name="author" type="text" value="Anthony Combalicer" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="readingMinutes">Reading time (minutes)</label>
+                                <input id="readingMinutes" name="readingMinutes" type="number" min="1" max="30" value="3">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="subtitle">Subtitle</label>
+                                <input id="subtitle" name="subtitle" type="text" placeholder="Short hook for the article">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="accentColor">Accent color</label>
+                                <input id="accentColor" name="accentColor" type="color" value="#5D9C3E">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="image">Cover image URL or local path</label>
+                                <input id="image" name="image" type="text" placeholder="https://example.com/image.jpg or assets/images/example.png">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="authorAvatar">Author avatar URL or local path</label>
+                                <input id="authorAvatar" name="authorAvatar" type="text" placeholder="https://example.com/avatar.jpg or assets/images/avatar.png">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="excerpt">Excerpt</label>
+                            <textarea id="excerpt" name="excerpt" placeholder="Short summary of the article"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content">Article content</label>
+                            <textarea id="content" name="content" placeholder="Write your full article here... Use # headings, - [ ] checklists, and ![alt](image-url) for images." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Writing shortcuts</label>
+                            <div class="toolbar-actions" aria-label="Writing shortcuts">
+                                <button type="button" class="secondary" data-insert="heading">Add H2</button>
+                                <button type="button" class="secondary" data-insert="checklist">Add checklist</button>
+                                <button type="button" class="secondary" data-insert="image">Add image</button>
+                                <button type="button" class="secondary" data-insert="tips">Add tips</button>
+                                <button type="button" class="secondary" data-image-upload-trigger>Upload image</button>
+                            </div>
+                            <input id="article-image-upload" type="file" accept="image/*" hidden>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quick article templates</label>
+                            <div class="toolbar-actions" aria-label="Quick article templates">
+                                <button type="button" class="secondary" data-template="guide">Survival guide</button>
+                                <button type="button" class="secondary" data-template="farm">Farming guide</button>
+                                <button type="button" class="secondary" data-template="build">Build setup</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Draft tools</label>
+                            <div class="toolbar-actions" aria-label="Draft tools">
+                                <button type="button" class="secondary" id="save-draft-btn">Save draft</button>
+                                <button type="button" class="secondary" id="clear-draft-btn">Clear draft</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tags">Tags (comma separated)</label>
+                            <input id="tags" name="tags" type="text" placeholder="survival, farming, starter">
+                        </div>
+
+                        <div class="form-preview" aria-live="polite">
+                            <div class="preview-header">Live preview</div>
+                            <div class="preview-card">
+                                <span id="preview-category" class="preview-tag">Survival</span>
+                                <h3 id="preview-title">Your article title</h3>
+                                <p id="preview-excerpt">Short summary appears here.</p>
+                                <div class="preview-meta">
+                                    <span id="preview-meta">Beginner • 3 min</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row compact-row">
+                            <div class="form-group toggle-field">
+                                <label for="featured">Featured article</label>
+                                <input id="featured" name="featured" type="checkbox">
+                            </div>
+
+                            <div class="form-group status-field">
+                                <label for="status">Article status</label>
+                                <select id="status" name="status">
+                                    <option value="Draft">Draft</option>
+                                    <option value="Published">Published</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button id="submit-button" type="submit">Add article</button>
+                            <button id="cancel-edit" class="secondary" type="button" hidden>Cancel edit</button>
+                        </div>
+                    </form>
+                </section>
+
+                <aside class="admin-panel article-list-container" id="saved-articles-panel" aria-labelledby="article-list-heading">
+                    <h2 id="article-list-heading">Your saved articles</h2>
+                    <div class="article-toolbar" aria-label="Article filters and actions">
+                        <input id="article-search" type="search" placeholder="Search title, category, or author..." aria-label="Search articles">
+                        <div class="toolbar-row">
+                            <select id="article-status-filter" aria-label="Filter by status">
+                                <option value="all">All statuses</option>
+                                <option value="Published">Published</option>
+                                <option value="Draft">Draft</option>
+                            </select>
+                            <select id="article-sort" aria-label="Sort articles">
+                                <option value="newest">Newest first</option>
+                                <option value="oldest">Oldest first</option>
+                                <option value="title">Title A–Z</option>
+                                <option value="featured">Featured first</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-actions">
+                            <button id="select-all-button" type="button" class="secondary">Select all</button>
+                            <button id="bulk-delete-button" type="button" class="danger" hidden>Delete selected</button>
+                        </div>
+                    </div>
+                    <p id="empty-state" class="empty-state">No articles saved yet.</p>
+                    <ul id="article-list" class="admin-article-list"></ul>
+                    <div class="quick-panel">
+                        <h3>Quick tips</h3>
+                        <ul>
+                            <li>Use a strong title and image.</li>
+                            <li>Keep excerpts short and punchy.</li>
+                            <li>Use checklists for steps.</li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <section class="live-preview-panel" id="article-preview-panel" aria-labelledby="live-preview-heading" aria-live="polite">
+                    <h2 id="live-preview-heading" class="preview-header">Live article preview</h2>
+                    <div id="live-article-preview" class="live-article-preview"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>
